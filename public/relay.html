@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Relay — webhook delivery operations." />
+    <title>Relay — delivery operations</title>
+    <link rel="stylesheet" href="/relay.css" />
+    <script src="/relay.js" defer></script>
+  </head>
+  <body>
+    <header class="appbar">
+      <a class="brand" href="/"
+        ><span class="brand-glyph" aria-hidden="true">r</span>Relay</a
+      ><label class="workspace-control"
+        ><span class="sr-only">Workspace</span
+        ><select id="workspace-select" aria-label="Workspace"></select></label
+      ><span id="mode-label" class="workspace-name"></span>
+      <div class="app-actions">
+        <button class="quiet-action" id="workspace-open">Workspace</button
+        ><button class="quiet-action" id="logout">Sign out</button
+        ><button class="primary-action" id="open-dispatch">Send event</button>
+      </div>
+    </header>
+    <div id="notice" role="status" aria-live="polite" hidden></div>
+    <section id="login-panel" class="login-panel" hidden>
+      <p class="eyebrow">Relay</p>
+      <h1>Sign in</h1>
+      <p>Use your workspace account.</p>
+      <form id="login-form">
+        <label
+          >Email<input
+            id="login-email"
+            type="email"
+            autocomplete="username"
+            required /></label
+        ><label
+          >Password<input
+            id="login-password"
+            type="password"
+            autocomplete="current-password"
+            required /></label
+        ><button class="submit">Sign in</button>
+      </form>
+    </section>
+    <main id="app" hidden>
+      <div class="page-heading">
+        <div>
+          <h1 id="page-title">Deliveries</h1>
+          <p id="page-description">Requests, responses, and retries.</p>
+        </div>
+        <div class="connection">
+          <i></i><span id="worker-state">Connecting</span>
+        </div>
+      </div>
+      <nav class="section-nav" aria-label="Workspace sections">
+        <button data-view="deliveries" aria-current="page">Deliveries</button
+        ><button data-view="routes">Routes</button
+        ><button data-view="activity">Activity</button>
+      </nav>
+      <div id="view-deliveries" class="view-panel">
+        <div class="metrics-caption">
+          <span>Delivery summary</span
+          ><span id="metrics-window">Last 24 hours</span>
+        </div>
+        <section class="stat-row">
+          <article>
+            <span>Deliveries</span><b id="received">—</b
+            ><small id="pending-count">— pending</small>
+          </article>
+          <article>
+            <span>Success rate</span><b id="success-rate">—</b
+            ><small>delivered / completed deliveries</small>
+          </article>
+          <article>
+            <span>p95 latency</span><b id="latency-p95">—</b
+            ><small id="latency-detail">p50 — · p99 —</small>
+          </article>
+          <article>
+            <span>Failed</span><b id="failed" class="danger-value">—</b
+            ><small>unresolved, all time</small>
+          </article>
+        </section>
+        <section class="workspace">
+          <article class="ledger-panel" id="stream">
+            <div class="section-heading">
+              <div><h2>Recent deliveries</h2></div>
+              <button id="refresh" class="add-destination">Refresh</button>
+            </div>
+            <form id="search-form" class="search-form">
+              <label
+                >Event type<input
+                  name="type"
+                  placeholder="payment."
+                  maxlength="120" /></label
+              ><label
+                >Destination<select name="endpointId" id="filter-destination">
+                  <option value="">All routes</option>
+                </select></label
+              ><label
+                >Outcome<select name="status">
+                  <option value="">All outcomes</option>
+                  <option value="queued">Queued</option>
+                  <option value="processing">Processing</option>
+                  <option value="retrying">Retrying</option>
+                  <option value="delivered">Delivered</option>
+                  <option value="dead_letter">Dead letter</option>
+                </select></label
+              ><label
+                >Correlation ID<input
+                  name="correlationId"
+                  placeholder="Exact correlation ID"
+                  maxlength="120" /></label
+              ><label
+                >From · local time<input
+                  type="datetime-local"
+                  name="from" /></label
+              ><label
+                >To · local time<input type="datetime-local" name="to"
+              /></label>
+              <div class="search-actions">
+                <button class="primary-action">Apply filters</button
+                ><button type="reset" class="subtle-button">Clear</button>
+              </div>
+            </form>
+            <div class="ledger-labels">
+              <span>EVENT / CORRELATION</span><span>DESTINATION</span
+              ><span>OUTCOME</span><span>WHEN</span>
+            </div>
+            <div id="stream-list" class="stream-list"></div>
+            <div class="pagination">
+              <span id="page-label"></span
+              ><button id="previous-page" class="subtle-button">Previous</button
+              ><button id="next-page" class="subtle-button">Next</button>
+            </div>
+          </article>
+          <aside class="inspector" id="inspector">
+            <p class="eyebrow">Delivery details</p>
+            <h2>No delivery selected</h2>
+            <p>Select a row to see the request and its attempts.</p>
+          </aside>
+        </section>
+        <details class="trends">
+          <summary>
+            Delivery trends <span>Success rate and failure reasons</span>
+          </summary>
+          <div class="health-grid">
+            <article class="health-panel">
+              <h3>Attempt success over time</h3>
+              <div id="success-series" class="success-series"></div>
+              <p class="form-hint">
+                Buckets with no recorded attempts show a gap. Pending
+                reservations are excluded.
+              </p>
+            </article>
+            <article class="health-panel">
+              <h3>Failure reasons</h3>
+              <div id="failure-reasons"></div>
+              <p id="metrics-basis" class="form-hint"></p>
+            </article>
+          </div>
+        </details>
+      </div>
+      <div id="view-routes" class="view-panel" hidden>
+        <section class="destination-section" id="destinations">
+          <div class="section-heading">
+            <div><h2>Destinations</h2></div>
+            <button class="add-destination" id="open-endpoint">
+              Add route
+            </button>
+          </div>
+          <div class="destination-list" id="destination-list"></div>
+        </section>
+      </div>
+      <div id="view-activity" class="view-panel" hidden>
+        <section id="audit" class="audit-panel">
+          <div class="section-heading">
+            <div><h2>Audit log</h2></div>
+            <span class="queue-count">latest 100 records</span>
+          </div>
+          <div id="audit-list"></div>
+        </section>
+      </div>
+    </main>
+    <dialog id="dispatch-modal" class="dispatch-dialog">
+      <button type="button" class="close" data-close aria-label="Close">
+        ×
+      </button>
+      <section class="dispatch-workbench" id="dispatch">
+        <form class="dispatch-form" id="dispatch-form">
+          <div class="section-heading">
+            <div><h2>Send an event</h2></div>
+            <span class="queue-count"></span>
+          </div>
+          <div class="form-body">
+            <div class="field-pair">
+              <label
+                >Event type<input
+                  id="dispatch-type"
+                  value="payment.created"
+                  maxlength="120"
+                  required /></label
+              ><label
+                >Destination<select id="dispatch-destination">
+                  <option value="">All matching routes</option>
+                </select></label
+              >
+            </div>
+            <label
+              >Payload JSON<textarea id="dispatch-payload" rows="5" required>
+{"payment_id":"pay_demo","amount":3200,"currency":"USD"}</textarea></label
+            ><label
+              >Idempotency key
+              <div class="input-action">
+                <input id="dispatch-key" maxlength="200" required /><button
+                  type="button"
+                  id="new-key"
+                >
+                  New key
+                </button>
+              </div></label
+            ><label
+              >Correlation ID · optional<input
+                id="dispatch-correlation"
+                maxlength="120"
+                placeholder="Generated if omitted" /></label
+            ><button class="dispatch-submit" id="dispatch-submit">
+              Send event
+            </button>
+            <p class="form-hint">
+              Keep the same key to safely retry an uncertain request. A changed
+              payload requires a new key.
+            </p>
+          </div>
+        </form>
+        <aside class="routing-preview">
+          <div class="section-heading">
+            <div><h2>Matching routes</h2></div>
+            <span id="route-match-count" class="queue-count">—</span>
+          </div>
+          <div class="route-resolution" id="route-resolution"></div>
+          <div class="ingress-contract">
+            <p>API endpoint</p>
+            <code>POST /api/ingest</code
+            ><span>A 202 response confirms the event is queued.</span>
+          </div>
+          <div
+            id="dispatch-result"
+            class="dispatch-result"
+            aria-live="polite"
+          ></div>
+        </aside>
+      </section>
+    </dialog>
+    <dialog id="endpoint-modal">
+      <form id="endpoint-form">
+        <button type="button" class="close" data-close aria-label="Close">
+          ×
+        </button>
+        <h2>Add route</h2>
+        <label>Name<input name="name" maxlength="80" required /></label
+        ><label
+          >Webhook URL<input
+            name="url"
+            type="url"
+            placeholder="https://receiver.example/webhook"
+            required /></label
+        ><label
+          >Event rule<input
+            name="eventPattern"
+            value="payment.*"
+            maxlength="120"
+            required
+        /></label>
+        <p class="dialog-copy">
+          Configure retry policy after creation. Receiver credentials are
+          provisioned privately through the CLI.
+        </p>
+        <button class="submit">Create route</button>
+      </form>
+    </dialog>
+    <dialog id="route-modal" class="route-dialog">
+      <button type="button" class="close" data-close aria-label="Close">
+        ×
+      </button>
+      <div id="route-detail"></div>
+    </dialog>
+    <dialog id="workspace-modal">
+      <button type="button" class="close" data-close aria-label="Close">
+        ×
+      </button>
+      <div class="workspace-modal-body">
+        <h2>Workspace settings</h2>
+        <p class="form-hint">Your user ID</p>
+        <code id="user-id" class="break-text"></code>
+        <form id="workspace-form">
+          <label
+            >New workspace name<input
+              name="name"
+              maxlength="80"
+              required /></label
+          ><button class="submit">Create workspace</button>
+        </form>
+        <form id="member-form">
+          <h3>Add an existing Relay user</h3>
+          <label>Supabase user ID<input name="userId" required /></label
+          ><label
+            >Role<select name="role">
+              <option value="viewer">Viewer · read only</option>
+              <option value="operator">Operator · ingest and replay</option>
+            </select></label
+          ><button class="submit">Save membership</button>
+        </form>
+        <div id="member-list"></div>
+      </div>
+    </dialog>
+  </body>
+</html>

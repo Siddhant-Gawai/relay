@@ -1,0 +1,25 @@
+{
+  "name": "relay-webhook-reliability",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Webhook inspection, replay, and delivery reliability workspace.",
+  "type": "module",
+  "scripts": {
+    "start": "node server-v2.js",
+    "dev": "node --watch server-v2.js",
+    "test": "node --test tests/e2e.test.js",
+    "demo": "node scripts/demo.js",
+    "test:ui": "playwright test",
+    "worker": "node worker.js"
+  },
+  "dependencies": {
+    "mongodb": "^6.21.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "prettier": "^3.9.6"
+  }
+}

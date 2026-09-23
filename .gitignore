@@ -1,0 +1,11 @@
+.env
+.DS_Store
+node_modules
+.relay-local/
+playwright-report/
+test-results/
+*.secret
+
+.env.*
+!.env.example
+*.log
