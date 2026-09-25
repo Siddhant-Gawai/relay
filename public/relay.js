@@ -339,7 +339,9 @@ async function selectEvent(id) {
     escape(event.correlationId) +
     '">' +
     escape(event.correlationId) +
-    '</button><pre class="payload">' +
+    '</button><button type="button" class="subtle-button" data-copy-correlation="' +
+    escape(event.correlationId) +
+    '">Copy correlation ID</button><pre class="payload">' +
     escape(JSON.stringify(event.payload, null, 2)) +
     "</pre>" +
     attemptRows(event) +
@@ -618,6 +620,20 @@ document.addEventListener(
         notice("Replay queued. Earlier attempts are retained.");
       } finally {
         replay.disabled = false;
+      }
+    }
+    const copyCorrelation = event.target.closest("[data-copy-correlation]");
+    if (copyCorrelation) {
+      try {
+        await navigator.clipboard.writeText(
+          copyCorrelation.dataset.copyCorrelation,
+        );
+        notice("Correlation ID copied.");
+      } catch {
+        notice(
+          "Clipboard unavailable. Select and copy the correlation ID manually.",
+          true,
+        );
       }
     }
     const correlation = event.target.closest("[data-correlation]");
