@@ -656,12 +656,17 @@ $("#search-form").addEventListener(
       return;
     }
     search = new URLSearchParams();
-    for (const [key, value] of new FormData(event.target))
+    for (const [key, rawValue] of new FormData(event.target)) {
+      const value = ["type", "correlationId"].includes(key)
+        ? rawValue.trim()
+        : rawValue;
+      event.target.elements.namedItem(key).value = value;
       if (value)
         search.set(
           key,
           ["from", "to"].includes(key) ? new Date(value).toISOString() : value,
         );
+    }
     page = 0;
     await refresh();
   }),
