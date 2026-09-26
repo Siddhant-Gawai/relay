@@ -649,6 +649,12 @@ $("#search-form").addEventListener(
   "submit",
   guarded(async (event) => {
     event.preventDefault();
+    const { from, to } = event.target.elements;
+    if (from.value && to.value && new Date(from.value) > new Date(to.value)) {
+      notice("End time must be on or after start time.", true);
+      to.focus();
+      return;
+    }
     search = new URLSearchParams();
     for (const [key, value] of new FormData(event.target))
       if (value)

@@ -75,7 +75,7 @@ The interface opens on the delivery ledger, with a compact summary and adjacent 
 - **Audit:** latest 100 workspace actions, with actor, action, target and timestamp.
 - **Access:** select or create workspaces; owners can add existing Relay users as operators or viewers. The UI supports desktop and mobile, keyboard focus and reduced motion.
 
-Metrics default to deliveries accepted in the last 24 hours; the date filters can change this cohort. Attempt metrics include recorded outcomes within the selected window, excluding unfinished reservations. Terminal success excludes pending deliveries. A window exceeding 20,000 deliveries is rejected with a request to narrow the range; it is never silently sampled. Use database rollups for larger traffic volumes.
+Metrics default to deliveries accepted in the last 24 hours; the date filters can change this cohort. The filter form catches reversed date ranges before submitting, preserving the current results while you correct the end time. Attempt metrics include recorded outcomes within the selected window, excluding unfinished reservations. Terminal success excludes pending deliveries. A window exceeding 20,000 deliveries is rejected with a request to narrow the range; it is never silently sampled. Use database rollups for larger traffic volumes.
 
 ## Ingress contract
 
@@ -167,4 +167,3 @@ scripts/demo.js       Atlas-backed loopback demo and real test receivers
 scripts/provision-secret.js  Private receiver credential provisioning
 tests/                Backend and browser end-to-end coverage
 ```
-
