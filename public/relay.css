@@ -927,6 +927,10 @@ dialog form {
   font-size: 12px;
   color: #46603b;
 }
+#dismiss-notice {
+  margin-left: 8px;
+  color: inherit;
+}
 #notice.error {
   border-color: #e4c6b6;
   border-left-color: #a96549;

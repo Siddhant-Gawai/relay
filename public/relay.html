@@ -22,7 +22,10 @@
         ><button class="primary-action" id="open-dispatch">Send event</button>
       </div>
     </header>
-    <div id="notice" role="status" aria-live="polite" hidden></div>
+    <div id="notice" hidden>
+      <span id="notice-message" role="status" aria-live="polite"></span>
+      <button type="button" id="dismiss-notice" class="subtle-button" aria-label="Dismiss notification">Dismiss</button>
+    </div>
     <section id="login-panel" class="login-panel" hidden>
       <p class="eyebrow">Relay</p>
       <h1>Sign in</h1>

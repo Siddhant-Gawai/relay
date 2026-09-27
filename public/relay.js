@@ -44,6 +44,10 @@ $("#open-dispatch").addEventListener("click", () =>
   $("#dispatch-modal").showModal(),
 );
 let noticeTimer;
+$("#dismiss-notice").addEventListener("click", () => {
+  clearTimeout(noticeTimer);
+  $("#notice").hidden = true;
+});
 function notice(message, error = false) {
   clearTimeout(noticeTimer);
   if (!error)
@@ -51,7 +55,7 @@ function notice(message, error = false) {
       $("#notice").hidden = true;
     }, 6000);
   $("#notice").hidden = false;
-  $("#notice").textContent = message;
+  $("#notice-message").textContent = message;
   $("#notice").classList.toggle("error", error);
 }
 function showLogin() {

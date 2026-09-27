@@ -72,6 +72,7 @@ The interface opens on the delivery ledger, with a compact summary and adjacent 
 - **Route detail:** edit maximum attempts, fixed/exponential backoff, delay, timeout and enabled/paused state; inspect recent attempt history and receiver verification guidance.
 - **Delivery ledger:** combine event-type substring, destination, outcome, creation-date range and exact correlation ID filters. Event-type and correlation-ID searches trim surrounding whitespace, so accidental spaces from pasted text do not prevent matches. Results are paged in batches of 50. Correlation IDs in the inspector link back to search; use **Copy correlation ID** to paste an ID into logs or support notes. Clipboard access requires HTTPS or localhost and browser permission.
 - **Observability:** terminal delivery success rate, p50/p95/p99 attempt latency, attempt success over time, categorized failures and all-time unresolved queue counts. Route health keeps older unresolved failures visible. Empty metrics show no data.
+- **Notifications:** dismiss messages with a keyboard-accessible button. Success messages also disappear after six seconds; errors stay visible until dismissed or replaced.
 - **Audit:** latest 100 workspace actions, with actor, action, target and timestamp.
 - **Access:** select or create workspaces; owners can add existing Relay users as operators or viewers. The UI supports desktop and mobile, keyboard focus and reduced motion.
 
