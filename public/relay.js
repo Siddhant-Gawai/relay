@@ -508,17 +508,32 @@ $("#new-key").addEventListener("click", () => {
 });
 $("#dispatch-type").addEventListener("input", renderResolution);
 $("#dispatch-destination").addEventListener("change", renderResolution);
+$("#dispatch-payload").addEventListener("input", (event) => {
+  event.target.setCustomValidity("");
+});
 $("#dispatch-form").addEventListener(
   "submit",
   guarded(async (event) => {
     event.preventDefault();
     const button = $("#dispatch-submit");
+    const payloadField = $("#dispatch-payload");
+    let payload;
+    try {
+      payload = JSON.parse(payloadField.value);
+    } catch {
+      payloadField.setCustomValidity(
+        "Enter valid JSON. Check quotes, commas, and matching brackets.",
+      );
+      payloadField.reportValidity();
+      payloadField.focus();
+      return;
+    }
     button.disabled = true;
     try {
       const endpointId = $("#dispatch-destination").value;
       const body = {
         type: $("#dispatch-type").value,
-        payload: JSON.parse($("#dispatch-payload").value),
+        payload,
         ...(endpointId ? { endpointId } : {}),
         ...($("#dispatch-correlation").value
           ? { correlationId: $("#dispatch-correlation").value }
