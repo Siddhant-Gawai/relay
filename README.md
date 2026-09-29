@@ -66,7 +66,7 @@ Do not replace the encryption key casually: it is required to decrypt existing r
 
 ## Operational interface
 
-The interface opens on the delivery ledger, with a compact summary and adjacent inspector. Routes and activity have separate views; event submission opens in a dialog. Muted colors, table rows, plain labels and restrained typography keep the emphasis on operating the service.
+The interface opens on the delivery ledger, with a compact summary and adjacent inspector. Routes and activity have separate views; event submission opens in a dialog. Muted colors, table rows, plain labels and restrained typography keep the emphasis on operating the service. Data refreshes every eight seconds while the tab is visible, pauses while hidden, and refreshes immediately when you return to the tab.
 
 - **Dispatch:** preview matching destinations; supply an idempotency key and optional correlation ID; receive a persisted queue receipt. Invalid JSON is flagged directly on the payload field before submission, with feedback cleared when you edit it.
 - **Route detail:** edit maximum attempts, fixed/exponential backoff, delay, timeout and enabled/paused state; inspect recent attempt history and receiver verification guidance.

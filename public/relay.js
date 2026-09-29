@@ -796,7 +796,9 @@ boot().catch((error) => {
   showLogin();
   if (!error.message.includes("Sign in")) notice(error.message, true);
 });
-setInterval(() => {
+function refreshVisibleWorkspace() {
   if (!document.hidden && session)
     refresh().catch((error) => notice(error.message, true));
-}, 8000);
+}
+document.addEventListener("visibilitychange", refreshVisibleWorkspace);
+setInterval(refreshVisibleWorkspace, 8000);
