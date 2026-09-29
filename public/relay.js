@@ -433,6 +433,10 @@ function windowQuery() {
 async function refresh() {
   if (!session || refreshing || $("#app").hidden) return;
   refreshing = true;
+  const refreshButton = $("#refresh");
+  refreshButton.disabled = true;
+  refreshButton.textContent = "Refreshing…";
+  refreshButton.setAttribute("aria-busy", "true");
   const captured = workspaceId;
   try {
     const params = new URLSearchParams(search);
@@ -471,6 +475,9 @@ async function refresh() {
     if (selectedEvent) await selectEvent(selectedEvent);
   } finally {
     refreshing = false;
+    refreshButton.disabled = false;
+    refreshButton.textContent = "Refresh";
+    refreshButton.removeAttribute("aria-busy");
   }
 }
 async function boot(preferred) {
