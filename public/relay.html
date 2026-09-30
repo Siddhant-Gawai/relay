@@ -211,8 +211,9 @@
             </div>
             <label
               >Payload JSON<textarea id="dispatch-payload" rows="5" required>
-{"payment_id":"pay_demo","amount":3200,"currency":"USD"}</textarea></label
-            ><label
+{"payment_id":"pay_demo","amount":3200,"currency":"USD"}</textarea></label>
+            <button type="button" id="format-payload" class="subtle-button">Format JSON</button>
+            <label
               >Idempotency key
               <div class="input-action">
                 <input id="dispatch-key" maxlength="200" required /><button

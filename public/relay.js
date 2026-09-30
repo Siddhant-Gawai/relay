@@ -518,6 +518,19 @@ $("#dispatch-destination").addEventListener("change", renderResolution);
 $("#dispatch-payload").addEventListener("input", (event) => {
   event.target.setCustomValidity("");
 });
+$("#format-payload").addEventListener("click", () => {
+  const field = $("#dispatch-payload");
+  try {
+    field.value = JSON.stringify(JSON.parse(field.value), null, 2);
+    field.setCustomValidity("");
+  } catch {
+    field.setCustomValidity(
+      "Enter valid JSON. Check quotes, commas, and matching brackets.",
+    );
+    field.reportValidity();
+  }
+  field.focus();
+});
 $("#dispatch-form").addEventListener(
   "submit",
   guarded(async (event) => {
