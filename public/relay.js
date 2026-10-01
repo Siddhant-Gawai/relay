@@ -678,9 +678,11 @@ document.addEventListener(
     const correlation = event.target.closest("[data-correlation]");
     if (correlation) {
       setView("deliveries");
-      $("#search-form").elements.correlationId.value =
-        correlation.dataset.correlation;
-      $("#search-form").requestSubmit();
+      const form = $("#search-form");
+      for (const field of form.querySelectorAll("input, select"))
+        field.value = "";
+      form.elements.correlationId.value = correlation.dataset.correlation;
+      form.requestSubmit();
     }
   }),
 );
