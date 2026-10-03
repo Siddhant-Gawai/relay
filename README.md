@@ -75,7 +75,7 @@ The interface opens on the delivery ledger, with a compact summary and adjacent 
 - **Refresh feedback:** the Refresh button shows “Refreshing…” and is disabled while data loads, then becomes available again on success or failure.
 - **Notifications:** dismiss messages with a keyboard-accessible button. Success messages also disappear after six seconds; errors stay visible until dismissed or replaced.
 - **Audit:** latest 100 workspace actions, with actor, action, target and timestamp.
-- **Access:** select or create workspaces; owners can add existing Relay users as operators or viewers. The UI supports desktop and mobile, keyboard focus and reduced motion.
+- **Access:** select or create workspaces; owners can add existing Relay users as operators or viewers. The UI supports desktop and mobile, keyboard focus and reduced motion. Opening a delivery scrolls to its inspector without animation when your system requests reduced motion.
 
 Metrics default to deliveries accepted in the last 24 hours; the date filters can change this cohort. The filter form catches reversed date ranges before submitting, preserving the current results while you correct the end time. Attempt metrics include recorded outcomes within the selected window, excluding unfinished reservations. Terminal success excludes pending deliveries. A window exceeding 20,000 deliveries is rejected with a request to narrow the range; it is never silently sampled. Use database rollups for larger traffic volumes.
 

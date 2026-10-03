@@ -642,7 +642,12 @@ document.addEventListener(
         setView("deliveries");
       }
       await selectEvent(delivery.dataset.event || delivery.dataset.routeEvent);
-      $("#inspector").scrollIntoView({ behavior: "smooth", block: "nearest" });
+      $("#inspector").scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+        block: "nearest",
+      });
     }
     const route = event.target.closest("[data-route]");
     if (route) await selectRoute(route.dataset.route);
