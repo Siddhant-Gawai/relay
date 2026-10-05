@@ -549,6 +549,8 @@ $("#dispatch-form").addEventListener(
       return;
     }
     button.disabled = true;
+    button.textContent = "Sending…";
+    button.setAttribute("aria-busy", "true");
     try {
       const endpointId = $("#dispatch-destination").value;
       const body = {
@@ -580,6 +582,8 @@ $("#dispatch-form").addEventListener(
       );
     } finally {
       button.disabled = !operator();
+      button.textContent = "Send event";
+      button.removeAttribute("aria-busy");
     }
   }),
 );
