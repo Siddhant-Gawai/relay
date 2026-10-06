@@ -185,14 +185,14 @@
         </section>
       </div>
     </main>
-    <dialog id="dispatch-modal" class="dispatch-dialog">
+    <dialog id="dispatch-modal" class="dispatch-dialog" aria-labelledby="dispatch-title">
       <button type="button" class="close" data-close aria-label="Close">
         ×
       </button>
       <section class="dispatch-workbench" id="dispatch">
         <form class="dispatch-form" id="dispatch-form">
           <div class="section-heading">
-            <div><h2>Send an event</h2></div>
+            <div><h2 id="dispatch-title">Send an event</h2></div>
             <span class="queue-count"></span>
           </div>
           <div class="form-body">
@@ -256,12 +256,12 @@
         </aside>
       </section>
     </dialog>
-    <dialog id="endpoint-modal">
+    <dialog id="endpoint-modal" aria-labelledby="endpoint-title">
       <form id="endpoint-form">
         <button type="button" class="close" data-close aria-label="Close">
           ×
         </button>
-        <h2>Add route</h2>
+        <h2 id="endpoint-title">Add route</h2>
         <label>Name<input name="name" maxlength="80" required /></label
         ><label
           >Webhook URL<input
@@ -283,18 +283,18 @@
         <button class="submit">Create route</button>
       </form>
     </dialog>
-    <dialog id="route-modal" class="route-dialog">
+    <dialog id="route-modal" class="route-dialog" aria-label="Route details">
       <button type="button" class="close" data-close aria-label="Close">
         ×
       </button>
       <div id="route-detail"></div>
     </dialog>
-    <dialog id="workspace-modal">
+    <dialog id="workspace-modal" aria-labelledby="workspace-title">
       <button type="button" class="close" data-close aria-label="Close">
         ×
       </button>
       <div class="workspace-modal-body">
-        <h2>Workspace settings</h2>
+        <h2 id="workspace-title">Workspace settings</h2>
         <p class="form-hint">Your user ID</p>
         <code id="user-id" class="break-text"></code>
         <form id="workspace-form">
