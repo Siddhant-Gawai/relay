@@ -274,12 +274,11 @@ function renderEvents(result) {
         )
         .join("")
     : '<p class="empty-attention">No matching deliveries. Try another filter or dispatch an event.</p>';
-  $("#page-label").textContent =
-    (result.total ? page + 1 : 0) +
-    "–" +
-    Math.min(page + result.events.length, result.total) +
-    " of " +
-    result.total;
+  const pageLabel = result.events.length
+    ? `${page + 1}–${page + result.events.length} of ${result.total} deliveries`
+    : "No matching deliveries";
+  if ($("#page-label").textContent !== pageLabel)
+    $("#page-label").textContent = pageLabel;
   $("#previous-page").disabled = page === 0;
   $("#next-page").disabled = page + 50 >= result.total;
 }
