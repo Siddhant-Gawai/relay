@@ -200,6 +200,7 @@
               <label
                 >Event type<input
                   id="dispatch-type"
+                  autocapitalize="off" autocorrect="off" spellcheck="false"
                   value="payment.created"
                   maxlength="120"
                   required /></label
@@ -210,13 +211,13 @@
               >
             </div>
             <label
-              >Payload JSON<textarea id="dispatch-payload" rows="5" required>
+              >Payload JSON<textarea id="dispatch-payload" rows="5" autocapitalize="off" autocorrect="off" spellcheck="false" required>
 {"payment_id":"pay_demo","amount":3200,"currency":"USD"}</textarea></label>
             <button type="button" id="format-payload" class="subtle-button">Format JSON</button>
             <label
               >Idempotency key
               <div class="input-action">
-                <input id="dispatch-key" maxlength="200" required /><button
+                <input id="dispatch-key" maxlength="200" autocapitalize="off" autocorrect="off" spellcheck="false" required /><button
                   type="button"
                   id="new-key"
                 >
@@ -226,6 +227,7 @@
             ><label
               >Correlation ID · optional<input
                 id="dispatch-correlation"
+                autocapitalize="off" autocorrect="off" spellcheck="false"
                 maxlength="120"
                 placeholder="Generated if omitted" /></label
             ><button class="dispatch-submit" id="dispatch-submit">
