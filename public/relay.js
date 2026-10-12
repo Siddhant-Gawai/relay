@@ -33,6 +33,7 @@ function setView(view) {
     else button.removeAttribute("aria-current");
   });
   $("#page-title").textContent = titles[view][0];
+  document.title = titles[view][0] + " · Relay";
   $("#page-description").textContent = titles[view][1];
 }
 document
