@@ -325,7 +325,9 @@ async function selectEvent(id) {
     escape(event.type) +
     '</h2><p class="break-text">' +
     escape(event.id) +
-    '</p><div class="meta-grid"><div><span>DESTINATION</span><b>' +
+    '</p><button type="button" class="subtle-button" data-copy-delivery="' +
+    escape(event.id) +
+    '">Copy delivery ID</button><div class="meta-grid"><div><span>DESTINATION</span><b>' +
     escape(event.endpoint) +
     '</b></div><div><span>OUTCOME</span><b class="status ' +
     escape(event.status) +
@@ -670,16 +672,18 @@ document.addEventListener(
         replay.disabled = false;
       }
     }
-    const copyCorrelation = event.target.closest("[data-copy-correlation]");
-    if (copyCorrelation) {
+    const copyId = event.target.closest("[data-copy-correlation], [data-copy-delivery]");
+    if (copyId) {
+      const deliveryId = copyId.dataset.copyDelivery;
+      const label = deliveryId ? "Delivery ID" : "Correlation ID";
       try {
         await navigator.clipboard.writeText(
-          copyCorrelation.dataset.copyCorrelation,
+          deliveryId || copyId.dataset.copyCorrelation,
         );
-        notice("Correlation ID copied.");
+        notice(label + " copied.");
       } catch {
         notice(
-          "Clipboard unavailable. Select and copy the correlation ID manually.",
+          "Clipboard unavailable. Select and copy the " + label.toLowerCase() + " manually.",
           true,
         );
       }
