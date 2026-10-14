@@ -300,7 +300,9 @@ function attemptRows(event) {
                 a.error ||
                   (a.outcome === "started"
                     ? "Reserved; completion was not recorded. It may have reached the receiver."
-                    : "HTTP " + a.responseCode),
+                    : a.responseCode == null
+                      ? "No HTTP response recorded."
+                      : "HTTP " + a.responseCode),
               ) +
               " · " +
               ms(a.latency) +
