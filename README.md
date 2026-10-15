@@ -77,7 +77,7 @@ The interface opens on the delivery ledger, with a compact summary and adjacent 
 - **Delivery ID:** use **Copy delivery ID** in the inspector to copy the stable delivery identifier for API requests or receiver-log lookups. Clipboard access requires HTTPS or localhost and browser permission.
 - **Navigation:** the browser tab title follows the active Deliveries, Routes, or Activity view, making open Relay tabs easier to identify.
 - **Result counts:** the delivery pager names the visible range and total, or says “No matching deliveries” for empty results. Count changes are announced to screen readers; unchanged counts are not rewritten during automatic refresh.
-- **Dialog accessibility:** Send event, Add route, Route details, and Workspace settings have explicit accessible names so screen readers can identify the open dialog.
+- **Dialog accessibility:** Send event, Add route, Route details, and Workspace settings have explicit accessible names so screen readers can identify the open dialog. Send event and Add route initially focus Event type and Route name so you can start typing immediately.
 - **Notifications:** dismiss messages with a keyboard-accessible button. Success messages also disappear after six seconds; errors stay visible until dismissed or replaced.
 - **Audit:** latest 100 workspace actions, with actor, action, target and timestamp.
 - **Access:** select or create workspaces; owners can add existing Relay users as operators or viewers. The UI supports desktop and mobile, keyboard focus and reduced motion. Opening a delivery scrolls to its inspector without animation when your system requests reduced motion.
