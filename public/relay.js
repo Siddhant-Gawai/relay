@@ -349,7 +349,7 @@ async function selectEvent(id) {
     escape(event.correlationId) +
     '</button><button type="button" class="subtle-button" data-copy-correlation="' +
     escape(event.correlationId) +
-    '">Copy correlation ID</button><pre class="payload">' +
+    '">Copy correlation ID</button><pre class="payload" tabindex="0" role="region" aria-label="Event payload JSON">' +
     escape(JSON.stringify(event.payload, null, 2)) +
     "</pre>" +
     attemptRows(event) +
