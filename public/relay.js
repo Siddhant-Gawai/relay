@@ -522,6 +522,13 @@ $("#dispatch-destination").addEventListener("change", renderResolution);
 $("#dispatch-payload").addEventListener("input", (event) => {
   event.target.setCustomValidity("");
 });
+$("#dispatch-payload").addEventListener("keydown", (event) => {
+  if ((event.ctrlKey || event.metaKey) && event.shiftKey &&
+      !event.altKey && event.key.toLowerCase() === "f") {
+    event.preventDefault();
+    $("#format-payload").click();
+  }
+});
 $("#format-payload").addEventListener("click", () => {
   const field = $("#dispatch-payload");
   try {
