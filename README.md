@@ -76,6 +76,7 @@ The interface opens on the delivery ledger, with a compact summary and adjacent 
 - **Payload editing:** press **Ctrl+Shift+F** (or **Cmd+Shift+F** on Mac) while the payload field is focused to run Format JSON, including its existing invalid-JSON feedback.
 - **Payload access:** the inspector's JSON panel is keyboard-focusable and labeled for screen readers, so long payloads can be scrolled without a mouse.
 - **Delivery ID:** use **Copy delivery ID** in the inspector to copy the stable delivery identifier for API requests or receiver-log lookups. Clipboard access requires HTTPS or localhost and browser permission.
+- **Data freshness:** a timestamp beside Refresh shows the last successful refresh in your local time. Failed refreshes preserve the previous timestamp.
 - **Navigation:** the browser tab title follows the active Deliveries, Routes, or Activity view, making open Relay tabs easier to identify.
 - **Result counts:** the delivery pager names the visible range and total, or says “No matching deliveries” for empty results. Count changes are announced to screen readers; unchanged counts are not rewritten during automatic refresh.
 - **Dialog accessibility:** Send event, Add route, Route details, and Workspace settings have explicit accessible names so screen readers can identify the open dialog. Send event and Add route initially focus Event type and Route name so you can start typing immediately.

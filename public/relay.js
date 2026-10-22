@@ -477,6 +477,9 @@ async function refresh() {
           .join("")
       : '<p class="empty-note">Workspace actions will appear here.</p>';
     if (selectedEvent) await selectEvent(selectedEvent);
+    const updatedAt = new Date();
+    $("#last-updated").textContent = "Updated " + updatedAt.toLocaleTimeString();
+    $("#last-updated").title = "Last successful refresh: " + updatedAt.toLocaleString();
   } finally {
     refreshing = false;
     refreshButton.disabled = false;
