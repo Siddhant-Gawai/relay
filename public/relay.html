@@ -276,6 +276,8 @@
         ><label
           >Event rule<input
             name="eventPattern"
+            pattern="[a-zA-Z0-9_.:*\-]+"
+            title="Use letters, numbers, underscores, dots, colons, asterisks, or hyphens."
             value="payment.*"
             maxlength="120"
             required

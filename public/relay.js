@@ -390,7 +390,7 @@ async function selectRoute(id) {
     escape(r.url) +
     '" required></label><label>Event rule<input name="eventPattern" value="' +
     escape(r.eventPattern) +
-    '" required></label><div class="field-pair"><label>Maximum attempts<input type="number" name="maxAttempts" min="1" max="10" value="' +
+    '" maxlength="120" pattern="[a-zA-Z0-9_.:*&#92;-]+" title="Use letters, numbers, underscores, dots, colons, asterisks, or hyphens." required></label><div class="field-pair"><label>Maximum attempts<input type="number" name="maxAttempts" min="1" max="10" value="' +
     r.retryPolicy.maxAttempts +
     '" required></label><label>Backoff<select name="backoff"><option value="exponential"' +
     (r.retryPolicy.backoff === "exponential" ? " selected" : "") +
