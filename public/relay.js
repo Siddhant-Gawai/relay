@@ -844,8 +844,9 @@ boot().catch((error) => {
   if (!error.message.includes("Sign in")) notice(error.message, true);
 });
 function refreshVisibleWorkspace() {
-  if (!document.hidden && session)
+  if (!document.hidden && navigator.onLine && session)
     refresh().catch((error) => notice(error.message, true));
 }
 document.addEventListener("visibilitychange", refreshVisibleWorkspace);
+window.addEventListener("online", refreshVisibleWorkspace);
 setInterval(refreshVisibleWorkspace, 8000);
