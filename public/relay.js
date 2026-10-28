@@ -157,13 +157,17 @@ function updateOptions(select, routes, initial) {
         (r) =>
           '<option value="' +
           escape(r.id) +
-          '">' +
+          '"' +
+          (select.id === "dispatch-destination" && !r.enabled ? " disabled" : "") +
+          '>' +
           escape(r.name) +
           (r.enabled ? "" : " (paused)") +
           "</option>",
       )
       .join("");
   select.value = previous;
+  if (select.selectedIndex === -1 || select.selectedOptions[0]?.disabled)
+    select.value = "";
 }
 function renderDashboard(data) {
   dashboard = data;
