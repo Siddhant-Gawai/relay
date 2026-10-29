@@ -612,10 +612,20 @@ $("#endpoint-form").addEventListener(
   "submit",
   guarded(async (event) => {
     event.preventDefault();
-    const result = await post(
-      "/api/endpoints",
-      Object.fromEntries(new FormData(event.target)),
-    );
+    const button = event.target.querySelector('button[type="submit"], button:not([type])');
+    if (button.disabled) return;
+    button.disabled = true;
+    button.setAttribute("aria-busy", "true");
+    let result;
+    try {
+      result = await post(
+        "/api/endpoints",
+        Object.fromEntries(new FormData(event.target)),
+      );
+    } finally {
+      button.disabled = false;
+      button.removeAttribute("aria-busy");
+    }
     $("#endpoint-modal").close();
     event.target.reset();
     await refresh();
