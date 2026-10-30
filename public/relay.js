@@ -492,6 +492,8 @@ async function refresh() {
   }
 }
 async function boot(preferred) {
+  $("#last-updated").textContent = "";
+  $("#last-updated").removeAttribute("title");
   session = await request("/api/session");
   workspaceId = preferred || workspaceId || session.defaultWorkspace;
   if (!session.workspaces.some((w) => w.id === workspaceId))
