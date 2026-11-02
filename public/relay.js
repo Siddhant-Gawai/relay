@@ -144,7 +144,13 @@ function renderResolution() {
             " attempts max</span></article>",
         )
         .join("")
-    : '<div class="empty-attention">No enabled route matches.<br>Add a destination to begin.</div>';
+    : '<div class="empty-attention">' +
+      (dashboard.endpoints.length === 0
+        ? "No destinations yet. Add a route to begin."
+        : dashboard.endpoints.every((route) => !route.enabled)
+          ? "All routes are paused. Enable a route to receive events."
+          : "No enabled route matches. Check the event type or route rules.") +
+      "</div>";
 }
 function updateOptions(select, routes, initial) {
   const previous = select.value;
